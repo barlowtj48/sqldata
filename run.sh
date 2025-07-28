@@ -10,14 +10,13 @@ mkdir -p /data/table_data
 
 if [[ "$1" == "dump" ]]; then
   shift
-  sqldatadump --directory=/data/table_data \
-              --schema=CORE \
+  sqldatadump --directory=/data \
               --rowsPerBatch=1000 \
               --batchesPerFile=10 \
-              --ignoreTables=CarrierRef,MasterLocation,Instance \
-              "$CONN" "$@"
+              "$@" \
+              "$CONN"
 elif [[ "$1" == "load" ]]; then
-  sqldataload --directory=/data/table_data "$CONN"
+  sqldataload --directory=/data "$CONN"
 else
   echo "Usage: $0 dump|load [additional sqldatadump args]"
   exit 1
